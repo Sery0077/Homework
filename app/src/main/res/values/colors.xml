@@ -3,4 +3,10 @@
     <color name="colorPrimary">#443370</color>
     <color name="colorAccent">#443370</color>
     <color name="backgroundColor">#F8F8FF</color>
+
+    <color name="processProgressBarColor">#D2A064</color>
+    <color name="processProgressBarBackgroundColor">#FFD892</color>
+
+    <color name="daysProgressBarColor">#443370</color>
+    <color name="daysProgressBarBackgroundColor">#E0CEF3</color>
 </resources>
