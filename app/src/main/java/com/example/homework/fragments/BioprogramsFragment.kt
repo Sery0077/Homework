@@ -2,9 +2,16 @@ package com.example.homework.fragments
 
 import android.graphics.BitmapFactory
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.Animation
+import android.view.animation.AnimationSet
+import android.view.animation.AnimationUtils
+import android.view.animation.RotateAnimation
+import android.widget.Button
+import android.widget.ImageButton
 import android.widget.LinearLayout
 import androidx.fragment.app.Fragment
 import androidx.palette.graphics.Palette
@@ -15,11 +22,13 @@ import com.example.homework.R
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.bottom_sheet_list_recycler_item.view.*
 import kotlinx.android.synthetic.main.horizontal_recycler_item.view.*
+import java.lang.Math.abs
 
 class BioprogramsFragment : Fragment() {
 
     private lateinit var horizontalRecycler: RecyclerView
     private lateinit var bottomListRecycler: RecyclerView
+
     private val bottomListRecyclerAdapter = object : Adapter() {
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -42,7 +51,20 @@ class BioprogramsFragment : Fragment() {
         }
 
     }
+
     private lateinit var bottomSheetList: LinearLayout
+    private lateinit var bottomSheetListButton: ImageButton
+    private lateinit var bottomSheetBehavior: BottomSheetBehavior<LinearLayout>
+
+    private var bottomSheetListener = object: BottomSheetBehavior.BottomSheetCallback() {
+        override fun onSlide(bottomSheet: View, slideOffset: Float) {
+            bottomSheetListButton.rotation = slideOffset * 180
+            horizontalRecycler.alpha = kotlin.math.abs(1 - slideOffset)
+        }
+
+        override fun onStateChanged(bottomSheet: View, newState: Int) {}
+
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -55,30 +77,35 @@ class BioprogramsFragment : Fragment() {
 
         initRecycler()
 
+        setClickers()
+
         return view
     }
 
     private fun initRecycler() {
         horizontalRecycler.layoutManager =
-            LinearLayoutManager(BioprogramsFragment@ context, LinearLayoutManager.HORIZONTAL, false)
+            LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         horizontalRecycler.adapter = Adapter()
 
-        bottomListRecycler.layoutManager = LinearLayoutManager(BioprogramsFragment@ context)
+        bottomListRecycler.layoutManager = LinearLayoutManager(context)
         bottomListRecycler.adapter = bottomListRecyclerAdapter
     }
 
     private fun initView(view: View) {
         horizontalRecycler = view.findViewById(R.id.courses_recycler)
-        bottomListRecycler = view.findViewById(R.id.bottom_list_recycler)
 
+        bottomListRecycler = view.findViewById(R.id.bottom_list_recycler)
         bottomSheetList = view.findViewById(R.id.bottom_sheet)
+        bottomSheetListButton = view.findViewById(R.id.bottom_sheet_list_button)
 
         //set bottom sheet list peek height according to display size
         val activity = activity
         val displayHeight = activity!!.windowManager.defaultDisplay.height
-        val behavior = BottomSheetBehavior.from(bottomSheetList)
+        bottomSheetBehavior = BottomSheetBehavior.from(bottomSheetList)
         val bottomSheetListHeight = displayHeight * 0.44
-        behavior.peekHeight = bottomSheetListHeight.toInt()
+        bottomSheetBehavior.peekHeight = bottomSheetListHeight.toInt()
+
+        bottomSheetBehavior.addBottomSheetCallback(bottomSheetListener)
     }
 
     open inner class Adapter : RecyclerView.Adapter<Adapter.ViewHolder>() {
@@ -118,6 +145,20 @@ class BioprogramsFragment : Fragment() {
 
                     background_image.setImageResource(R.drawable.image_course)
                 }
+            }
+        }
+    }
+
+    private fun setClickers() {
+        bottomSheetListButton.setOnClickListener {
+            if (bottomSheetBehavior.state == BottomSheetBehavior.STATE_COLLAPSED) {
+                bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
+                bottomSheetListButton.animate().rotation(180F).duration = 500
+                horizontalRecycler.animate().alpha(0F).duration = 500
+            } else {
+                bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
+                bottomSheetListButton.animate().rotation(0F).duration = 500
+                horizontalRecycler.animate().alpha(1F).duration = 500
             }
         }
     }
