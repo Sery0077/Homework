@@ -2,15 +2,9 @@ package com.example.homework.fragments
 
 import android.graphics.BitmapFactory
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.Animation
-import android.view.animation.AnimationSet
-import android.view.animation.AnimationUtils
-import android.view.animation.RotateAnimation
-import android.widget.Button
 import android.widget.ImageButton
 import android.widget.LinearLayout
 import androidx.fragment.app.Fragment
@@ -22,7 +16,6 @@ import com.example.homework.R
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.bottom_sheet_list_recycler_item.view.*
 import kotlinx.android.synthetic.main.horizontal_recycler_item.view.*
-import java.lang.Math.abs
 
 class BioprogramsFragment : Fragment() {
 

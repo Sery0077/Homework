@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">Homework</string>
+    <string name="rate_app">Оценить\n<b>приложение</b></string>
+    <string name="message_to_developer">Написать\n<b>сообщение</b></string>
+    <string name="info_about_app">Подробнее о\n<b>приложении</b></string>
 </resources>
