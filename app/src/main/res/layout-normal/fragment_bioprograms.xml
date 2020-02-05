@@ -16,6 +16,7 @@
         android:text="Курсы"
         android:textColor="#000000"
         android:textSize="24sp"
+        android:fontFamily="@font/gilroy"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

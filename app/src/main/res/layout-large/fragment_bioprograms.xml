@@ -15,6 +15,7 @@
         android:layout_marginTop="18dp"
         android:text="Курсы"
         android:textColor="#000000"
+        android:fontFamily="@font/gilroy"
         android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
